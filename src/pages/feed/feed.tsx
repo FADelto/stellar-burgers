@@ -3,10 +3,11 @@ import { FeedUI } from '@ui-pages';
 import { FC, useEffect } from 'react';
 import { useDispatch, useSelector } from '../../services/store';
 import { getFeeds } from '../../services/slices/feedSlice';
+import { selectFeedOrders } from '../../services/selectors';
 
 export const Feed: FC = () => {
   const dispatch = useDispatch();
-  const orders = useSelector((state) => state.feed.orders);
+  const orders = useSelector(selectFeedOrders);
 
   useEffect(() => {
     dispatch(getFeeds());

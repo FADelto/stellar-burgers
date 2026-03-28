@@ -20,6 +20,11 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from '../../services/store';
 import { getIngredients } from '../../services/slices/ingredientsSlice';
 import { getUser } from '../../services/slices/userSlice';
+import {
+  selectIngredientsLoading,
+  selectIngredients,
+  selectIngredientsError
+} from '../../services/selectors';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -27,16 +32,16 @@ const App = () => {
   const location = useLocation();
   const backgroundLocation = location.state?.background;
 
-  const isIngredientsLoading = useSelector(
-    (state) => state.ingredients.isLoading
-  );
-  const ingredients = useSelector((state) => state.ingredients.items);
-  const error = useSelector((state) => state.ingredients.error);
+  const isIngredientsLoading = useSelector(selectIngredientsLoading);
+  const ingredients = useSelector(selectIngredients);
+  const error = useSelector(selectIngredientsError);
 
   useEffect(() => {
     dispatch(getIngredients());
     dispatch(getUser());
   }, [dispatch]);
+
+  const handleCloseModal = () => navigate(-1);
 
   return (
     <div className={styles.app}>
@@ -131,7 +136,7 @@ const App = () => {
           <Route
             path='/feed/:number'
             element={
-              <Modal title='' onClose={() => navigate(-1)}>
+              <Modal title='' onClose={handleCloseModal}>
                 <OrderInfo />
               </Modal>
             }
@@ -139,7 +144,7 @@ const App = () => {
           <Route
             path='/ingredients/:id'
             element={
-              <Modal title='Детали ингредиента' onClose={() => navigate(-1)}>
+              <Modal title='Детали ингредиента' onClose={handleCloseModal}>
                 <IngredientDetails />
               </Modal>
             }
@@ -148,7 +153,7 @@ const App = () => {
             path='/profile/orders/:number'
             element={
               <ProtectedRoute>
-                <Modal title='' onClose={() => navigate(-1)}>
+                <Modal title='' onClose={handleCloseModal}>
                   <OrderInfo />
                 </Modal>
               </ProtectedRoute>

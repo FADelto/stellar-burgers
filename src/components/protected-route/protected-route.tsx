@@ -1,6 +1,7 @@
 import { FC } from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
 import { useSelector } from '../../services/store';
+import { selectUser, selectIsAuthChecked } from '../../services/selectors';
 import { Preloader } from '@ui';
 
 type ProtectedRouteProps = {
@@ -12,8 +13,8 @@ export const ProtectedRoute: FC<ProtectedRouteProps> = ({
   onlyUnAuth,
   children
 }) => {
-  const user = useSelector((state) => state.user.user);
-  const isAuthChecked = useSelector((state) => state.user.isAuthChecked);
+  const user = useSelector(selectUser);
+  const isAuthChecked = useSelector(selectIsAuthChecked);
   const location = useLocation();
 
   if (!isAuthChecked) {

@@ -5,15 +5,14 @@ import { OrderInfoUI } from '../ui/order-info';
 import { TIngredient } from '@utils-types';
 import { useDispatch, useSelector } from '../../services/store';
 import { getOrderByNumber } from '../../services/slices/orderSlice';
+import { selectOrder, selectIngredients } from '../../services/selectors';
 
 export const OrderInfo: FC = () => {
   const { number } = useParams<{ number: string }>();
   const dispatch = useDispatch();
 
-  const orderData = useSelector((state) => state.order.order);
-  const ingredients: TIngredient[] = useSelector(
-    (state) => state.ingredients.items
-  );
+  const orderData = useSelector(selectOrder);
+  const ingredients: TIngredient[] = useSelector(selectIngredients);
 
   useEffect(() => {
     if (number) {
