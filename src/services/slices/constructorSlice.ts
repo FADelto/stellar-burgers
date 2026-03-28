@@ -47,10 +47,6 @@ const constructorSlice = createSlice({
       ];
       state.ingredients = ingredients;
     },
-    resetConstructor: (state) => {
-      state.bun = null;
-      state.ingredients = [];
-    }
   },
   extraReducers: (builder) => {
     builder.addCase(createOrder.fulfilled, (state) => {
@@ -60,11 +56,7 @@ const constructorSlice = createSlice({
   }
 });
 
-export const {
-  addIngredient,
-  removeIngredient,
-  moveIngredient,
-  resetConstructor
-} = constructorSlice.actions;
+export const { addIngredient, removeIngredient, moveIngredient } =
+  constructorSlice.actions;
 
 export default constructorSlice.reducer;
